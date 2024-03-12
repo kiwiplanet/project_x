@@ -16,4 +16,10 @@ return [
     'important'                     => '重要',
     'warning'                       => '警告',
     'information'                   => 'インフォメーション',
+
+    'item_list'                     => '食器一覧',
+    'item_register'                 => '新規登録',
+    'search'                        => '検索',
+    'bookmark'                      => 'ブックマーク',
+    'calendar'                      => 'カレンダー設定',
 ];

@@ -63,12 +63,12 @@ return [
     |
     */
 
-    'logo' => '<b>商品管理</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>食器管理</b>',
+    'logo_img' => 'img/logo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => '商品管理',
+    'logo_img_alt' => '食器管理',
 
     /*
     |--------------------------------------------------------------------------
@@ -291,9 +291,34 @@ return [
 
     'menu' => [
         [
-            'text' => '商品一覧',
+            'text' => 'item_list',
             'url'  => 'items',
-            'icon' => 'fas fa-gamepad',
+            'icon' => 'fas fa-clipboard-list',
+        ],
+
+        // サイドメニューの追加
+        [
+            'text' => 'item_register',
+            'url'  => 'items/add',
+            'icon' => 'fas 	fa-edit',
+        ],
+
+        [
+            'text' => 'search',
+            'url'  => '#',
+            'icon' => 'fas fa-search',
+        ],
+
+        [
+            'text' => 'bookmark',
+            'url'  => '#',
+            'icon' => 'fas fa-star',
+        ],
+
+        [
+            'text' => 'calendar',
+            'url'  => '#',
+            'icon' => 'far fa-calendar-check',
         ],
 
         // AdminLTEデフォルト
