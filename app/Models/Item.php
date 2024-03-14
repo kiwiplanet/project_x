@@ -14,9 +14,22 @@ class Item extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'type',
-        'detail',
+        'img_path',
+        'buyer',
+        'unit_price',
+        'regular_stock',
+        'total_stock',
+        'kitchen_stock',
+        'second_stock',
+        'smach_stock',
+        'detail'
     ];
+
+    // アイテムに対する関連付け
+    public function seasonItems()
+    {
+        return $this->belongsToMany(SeasonItem::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

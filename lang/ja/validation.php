@@ -253,6 +253,15 @@ return [
         'updated_at' => '更新日',
         'username' => 'ユーザー名',
         'year' => '年',
+        //追加分
+        'buyer' => '購入先',
+        'unit_price' => '単価',
+        'regular_stock' => '定数',
+        'total_stock' => '総在庫数',
+        'kitchen_stock' => '調理場在庫数',
+        'second_stock' => '2階倉庫在庫数',
+        'smach_stock' => '破損数',
+        'detail' => 'メモ',
+        'img_path' => '画像'
     ],
-
 ];
