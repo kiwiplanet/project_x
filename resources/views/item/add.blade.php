@@ -20,7 +20,7 @@
             @endif
 
             <div class="card card-primary">
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -35,7 +35,7 @@
                             <label for="buyer">購入先<span class="badge badge-danger">必須</span></label>
                             <input type="text" class="form-control" id="buyer" name="buyer" placeholder="購入先">
                             @error('buyer')
-                            <span style="color:red;">購入先の入力は必須です。（411文字以内）</span>
+                            <span style="color:red;">購入先の入力は必須です。（100文字以内）</span>
                             @enderror
                         </div>
 

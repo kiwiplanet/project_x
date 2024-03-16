@@ -1,48 +1,33 @@
 @extends('adminlte::page')
 
-@section('title', '商品一覧')
+@section('title', '食器一覧')
 
 @section('content_header')
-    <h1>商品一覧</h1>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>食器一覧</h1>
+        <div class="input-group-append ">
+            <a href="{{ url('items/add') }}" class="btn btn-default">新規登録</a>
+        </div>
+    </div>
 @stop
 
 @section('content')
     <div class="row">
         <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">商品一覧</h3>
-                    <div class="card-tools">
-                        <div class="input-group input-group-sm">
-                            <div class="input-group-append">
-                                <a href="{{ url('items/add') }}" class="btn btn-default">商品登録</a>
-                            </div>
-                        </div>
+            @foreach ($items as $item)
+                <div class="card" style="width: 18rem;">    
+                    <img src="{{ asset($item->img_path) }}" class="card-img-top" alt="{{ $item->name }}">
+                    <ul class="list-group list-group-flush">
+                            <li class="list-group-item">食器名：{{ $item->name }}</li>
+                            <li class="list-group-item">定数：{{ $item->regular_stock }}</li>
+                            <li class="list-group-item">総在庫数：{{ $item->total_stock }}</li>
+                            <li class="list-group-item">利用時期：中間テーブル</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="{{ url('items/detail') }}" class="card-link btn btn-default">詳細</a>
                     </div>
                 </div>
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>名前</th>
-                                <th>種別</th>
-                                <th>詳細</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($items as $item)
-                                <tr>
-                                    <td>{{ $item->id }}</td>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->type }}</td>
-                                    <td>{{ $item->detail }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 @stop
