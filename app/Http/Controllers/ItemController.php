@@ -26,7 +26,7 @@ class ItemController extends Controller
     public function index()
     {
         // 商品一覧取得
-        $items = Item::all();
+        $items = Item::select('img_path', 'name', 'regular_stock', 'total_stock')->get();
 
         return view('item.index', compact('items'));
     }
@@ -41,7 +41,7 @@ class ItemController extends Controller
             // バリデーション
             $this->validate($request, [
                 'name' => 'required|max:100',
-                'buyer' => 'required|max:411',
+                'buyer' => 'required|max:100',
                 'unit_price' => 'required|numeric',
                 'regular_stock' => 'required|integer',
                 'total_stock' => 'required|integer',
@@ -52,11 +52,20 @@ class ItemController extends Controller
                 'img_path' => 'required',
             ]);
 
+            // 画像のアップロードと保存
+            if ($request->hasFile('img_path')) {
+                $imagePath = $request->file('img_path')->store('public/items');
+                $imagePath = str_replace('public/', 'storage/', $imagePath);
+            } else {
+                // 画像がアップロードされていない場合、$imagePathをnullに設定
+                $imagePath = null;
+            }
+
             // 商品登録
             $item = Item::create([
                 'user_id' => Auth::user()->id,
                 'name' => $request->name,
-                'img_path' => $request->img_path,
+                'img_path' => $imagePath, // 保存した画像のパスを使用
                 'buyer' => $request->buyer,
                 'unit_price' => $request->unit_price,
                 'regular_stock' => $request->regular_stock,
