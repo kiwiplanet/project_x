@@ -31,6 +31,11 @@ class Item extends Model
         return $this->belongsToMany(SeasonItem::class);
     }
 
+    public function seasons()
+    {
+        return $this->hasManyThrough(Season::class, SeasonItem::class,'item_id', 'id', 'id', 'season_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

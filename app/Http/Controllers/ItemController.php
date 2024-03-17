@@ -21,18 +21,21 @@ class ItemController extends Controller
     }
 
     /**
-     * 商品一覧
+     * 食器一覧
      */
     public function index()
     {
-        // 商品一覧取得
-        $items = Item::select('img_path', 'name', 'regular_stock', 'total_stock')->get();
+        // 食器一覧取得
+        $items = Item::with('seasons')->paginate(20);
+        //指定されたカラムのみを取得じゃなくてOK？
+        // $items = Item::with('seasons')->select('id','img_path', 'name', 'regular_stock', 'total_stock')->get();
+
 
         return view('item.index', compact('items'));
     }
 
     /**
-     * 商品登録
+     * 新規登録
      */
     public function add(Request $request)
     {
@@ -61,7 +64,7 @@ class ItemController extends Controller
                 $imagePath = null;
             }
 
-            // 商品登録
+            // 新規登録
             $item = Item::create([
                 'user_id' => Auth::user()->id,
                 'name' => $request->name,
