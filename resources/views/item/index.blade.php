@@ -3,10 +3,20 @@
 @section('title', '食器一覧')
 
 @section('content_header')
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex justify-content-between align-items-center input-group-append ">
         <h1>食器一覧</h1>
-        <div class="input-group-append ">
-            <a href="{{ url('items/add') }}" class="btn btn-default">新規登録</a>
+        <div class="pull-right">
+            <a href="{{ url('items/add') }}" class="btn btn-primary">新規登録</a>
+            <div class="mt-3">
+                <form id="sortForm" action="{{ url('items') }}" method="get">
+                    <select id="sortSelect" class="form-select" aria-label="Default select example" name="sort">
+                        <option value="newest">新しい順</option>
+                        <option value="oldest">古い順</option>
+                        <option value="most_stock">在庫多い順</option>
+                        <option value="least_stock">在庫少ない順</option>
+                    </select>
+                </form>
+            </div>
         </div>
     </div>
 @stop
@@ -35,7 +45,7 @@
                                 @endif
                             </li>
                         </ul>
-                        <a href="{{ url('items/detail') }}" class="card-link btn btn-default">詳細</a>
+                        <a href="{{ url('items/show/' . $item->id) }}" class="card-link btn btn-default">詳細</a>
                     </div>
                 </div>
             </div>
@@ -45,8 +55,9 @@
     {!! $items->onEachSide(1)->links('pagination::bootstrap-5') !!}
 @stop
 
-@section('css')
+@section('css')             
 @stop
 
 @section('js')
+    <script src="{{ asset('js/sort_items.js') }}"></script>
 @stop

@@ -23,14 +23,26 @@ class ItemController extends Controller
     /**
      * 食器一覧
      */
-    public function index()
+    public function index(Request $request)
     {
-        // 食器一覧取得
-        $items = Item::with('seasons')->paginate(20);
-        //指定されたカラムのみを取得じゃなくてOK？
-        // $items = Item::with('seasons')->select('id','img_path', 'name', 'regular_stock', 'total_stock')->get();
+        // 食器一覧取得（ソート）
+        $sortBy = $request->input('sort', 'newest');
 
-
+        switch ($sortBy) {
+            case 'oldest':        //古い順
+                $items = Item::with('seasons')->orderBy('created_at', 'asc')->paginate(20);
+                break;
+            case 'most_stock':    //多い順
+                $items = Item::with('seasons')->orderBy('total_stock', 'desc')->paginate(20);
+                break;
+            case 'least_stock':   //少ない順
+                $items = Item::with('seasons')->orderBy('total_stock', 'asc')->paginate(20);
+                break;
+            case 'newest':        //新しい順
+            default:
+                $items = Item::with('seasons')->orderBy('created_at', 'desc')->paginate(20);
+                break;
+        }
         return view('item.index', compact('items'));
     }
 
@@ -94,5 +106,17 @@ class ItemController extends Controller
         }
 
         return view('item.add');
+    }
+
+    /**
+     * 詳細画面の表示
+     * @param int $id
+     * @return view
+     */
+    public function show($id)
+    {
+        $item = Item::Find($id);
+
+        return view('item.show', compact('item'));
     }
 }

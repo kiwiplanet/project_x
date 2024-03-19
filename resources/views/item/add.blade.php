@@ -25,7 +25,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">名前<span class="badge badge-danger">必須</span></label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="名前">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="例）〇〇焼 花型平皿">
                             @error('name')
                             <span style="color:red;">名前の入力は必須です。（100文字以内）</span>
                             @enderror
@@ -33,7 +33,7 @@
 
                         <div class="form-group">
                             <label for="buyer">購入先<span class="badge badge-danger">必須</span></label>
-                            <input type="text" class="form-control" id="buyer" name="buyer" placeholder="購入先">
+                            <input type="text" class="form-control" id="buyer" name="buyer" placeholder="例）株式会社〇〇">
                             @error('buyer')
                             <span style="color:red;">購入先の入力は必須です。（100文字以内）</span>
                             @enderror
@@ -41,7 +41,7 @@
 
                         <div class="form-group">
                             <label for="unit_price">単価<span class="badge badge-danger">必須</span></label>
-                            <input type="text" class="form-control" id="unit_price" name="unit_price" placeholder="単価">
+                            <input type="text" class="form-control" id="unit_price" name="unit_price" placeholder="例）100円→100 ※セットの場合も1コ当たりで入力">
                             @error('unit_price')
                             <span style="color:red;">単価の入力は必須です。価格を入力してください。</span>
                             @enderror
@@ -49,7 +49,7 @@
 
                         <div class="form-group">
                             <label for="regular_stock">定数<span class="badge badge-danger">必須</span></label>
-                            <input type="number" class="form-control" id="regular_stock" name="regular_stock" placeholder="定数">
+                            <input type="number" class="form-control" id="regular_stock" name="regular_stock" placeholder="例）100個→100">
                             @error('regular_stock')
                             <span style="color:red;">定数の入力は必須です。数値を入力してください。</span>
                             @enderror
@@ -57,7 +57,7 @@
 
                         <div class="form-group">
                             <label for="total_stock">総在庫数<span class="badge badge-danger">必須</span></label>
-                            <input type="number" class="form-control" id="total_stock" name="total_stock" placeholder="総在庫数">
+                            <input type="number" class="form-control" id="total_stock" name="total_stock" placeholder="例）100個→100">
                             @error('total_stock')
                             <span style="color:red;">総在庫数の入力は必須です。数値を入力してください。</span>
                             @enderror
@@ -65,7 +65,7 @@
 
                         <div class="form-group">
                             <label for="kitchen_stock">調理場在庫数</label>
-                            <input type="number" class="form-control" id="kitchen_stock" name="kitchen_stock" placeholder="調理場在庫数">
+                            <input type="number" class="form-control" id="kitchen_stock" name="kitchen_stock" placeholder="例）50個→50">
                             @error('kitchen_stock')
                             <span style="color:red;">数値を入力してください。</span>
                             @enderror
@@ -73,7 +73,7 @@
                         
                         <div class="form-group">
                             <label for="second_stock">2階倉庫在庫数</label>
-                            <input type="number" class="form-control" id="second_stock" name="second_stock" placeholder="2階倉庫在庫数">
+                            <input type="number" class="form-control" id="second_stock" name="second_stock" placeholder="例）50個→50">
                             @error('second_stock')
                             <span style="color:red;">数値を入力してください。</span>
                             @enderror
@@ -81,7 +81,7 @@
 
                         <div class="form-group">
                             <label for="smach_stock">破損数</label>
-                            <input type="number" class="form-control" id="smach_stock" name="smach_stock" placeholder="破損数">
+                            <input type="number" class="form-control" id="smach_stock" name="smach_stock" placeholder="例）100個→100">
                             @error('smach_stock')
                             <span style="color:red;">数値を入力してください。</span>
                             @enderror
@@ -89,7 +89,7 @@
 
                         <div class="form-group">
                             <label for="detail">メモ</label>
-                            <input type="text" class="form-control" id="detail" name="detail" placeholder="詳細説明">
+                            <textarea class="form-control" id="detail" name="detail" rows="3" placeholder="例）〇月〇日〇個発注→〇月〇日到着予定／ヤマダ"></textarea>
                             @error('detail')
                             <span style="color:red;">500文字以内で入力してください。</span>
                             @enderror
