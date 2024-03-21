@@ -24,10 +24,12 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::prefix('items')->group(function () {
     // 食器一覧画面の表示
     Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
-    // 新規登録画面の表示
+    // 新規登録画面の表示と登録処理
     Route::get('/add', [App\Http\Controllers\ItemController::class, 'add']);
-    // 新規登録処理
     Route::post('/add', [App\Http\Controllers\ItemController::class, 'add']);
-    // 食器の詳細
+    // 食器の詳細画面の表示
     Route::get('/show/{id}', [App\Http\Controllers\ItemController::class, 'show']);
+    // 編集画面の表示と更新処理
+    Route::get('/edit/{id}', [App\Http\Controllers\ItemController::class, 'edit']);
+    Route::put('/update/{id}', [App\Http\Controllers\ItemController::class, 'update'])->name('items.update');
 });

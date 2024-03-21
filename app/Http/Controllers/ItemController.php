@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use App\Models\Season;
 use App\Models\SeasonItem;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -64,7 +65,7 @@ class ItemController extends Controller
                 'second_stock' => 'nullable|integer',
                 'smach_stock' => 'nullable|integer',
                 'detail' => 'nullable|max:500',
-                'img_path' => 'required',
+                'img_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
 
             // 画像のアップロードと保存
@@ -101,7 +102,6 @@ class ItemController extends Controller
                     ]);
                 }
             }
-
             return redirect('/items');
         }
 
@@ -118,5 +118,91 @@ class ItemController extends Controller
         $item = Item::Find($id);
 
         return view('item.show', compact('item'));
+    }
+
+    /**
+     * 編集画面の表示
+     *
+     * @param int $id
+     * @return view
+     */
+    public function edit($id)
+    {
+        $item = Item::findOrFail($id);
+        // 既存の利用時期のIDを取得する
+        $selectedSeasons = $item->seasons->pluck('id')->toArray();
+
+        return view('item.edit', compact('item', 'selectedSeasons'));
+    }
+
+    /**
+     * 更新処理
+     *
+     * @return view
+     */
+    public function update(Request $request, $id)
+    {
+        // PUTリクエストのとき
+        if ($request->isMethod('put')) {
+            // バリデーション
+            $this->validate($request, [
+                'name' => 'required|max:100',
+                'buyer' => 'required|max:100',
+                'unit_price' => 'required|numeric',
+                'regular_stock' => 'required|integer',
+                'total_stock' => 'required|integer',
+                'kitchen_stock' => 'nullable|integer',
+                'second_stock' => 'nullable|integer',
+                'smach_stock' => 'nullable|integer',
+                'detail' => 'nullable|max:500',
+                // 画像のバリデーションを更新
+                'img_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+
+            // 編集対象のアイテムを取得
+            $item = Item::findOrFail($id);
+
+            // 画像がアップロードされた場合の処理
+            if ($request->hasFile('img_path')) {
+                // 古い画像を削除
+                Storage::disk('public')->delete($item->img_path);
+                // 新しい画像をアップロード
+                $imagePath = $request->file('img_path')->store('public/items');
+                $imagePath = str_replace('public/', 'storage/', $imagePath);
+                // 画像パスを更新
+                $item->img_path = $imagePath;
+            }
+
+            // フォームからの入力を取得し、アップデート
+            $item->name = $request->input('name');
+            $item->buyer = $request->input('buyer');
+            $item->unit_price = $request->input('unit_price');
+            $item->regular_stock = $request->input('regular_stock');
+            $item->total_stock = $request->input('total_stock');
+            $item->kitchen_stock = $request->input('kitchen_stock');
+            $item->second_stock = $request->input('second_stock');
+            $item->smach_stock = $request->input('smach_stock');
+            $item->detail = $request->input('detail');
+            $item->save();
+
+            // 中間テーブルのモデルを取得
+            $seasonItems = SeasonItem::where('item_id', $item->id)->get();
+            // 中間テーブルのデータを削除
+            foreach ($seasonItems as $seasonItem) {
+                $seasonItem->delete();
+            }
+            // 新しい関連付けられたデータを追加
+            if ($request->has('seasons')) {
+                $seasonIds = $request->input('seasons');
+                foreach ($seasonIds as $seasonId) {
+                    SeasonItem::create([
+                        'season_id' => $seasonId,
+                        'item_id' => $item->id,
+                    ]);
+                }
+            }
+
+            return redirect('/items')->with('success', '更新が完了しました');
+        }
     }
 }

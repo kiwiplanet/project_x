@@ -87,7 +87,7 @@
                     </div>
 
                     <div class="card-footer">
-                    <a href="{{ url('items/edit') }}" class="btn btn-primary">編集</a>
+                    <a href="{{ url('items/edit/' . $item->id) }}" class="btn btn-primary">編集</a>
                     </div>
                     <div class="card-footer">
                         <a href="{{ url('/items') }}" class="btn btn-primary">戻る</a>
