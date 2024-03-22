@@ -32,4 +32,6 @@ Route::prefix('items')->group(function () {
     // 編集画面の表示と更新処理
     Route::get('/edit/{id}', [App\Http\Controllers\ItemController::class, 'edit']);
     Route::put('/update/{id}', [App\Http\Controllers\ItemController::class, 'update'])->name('items.update');
+    // 削除処理
+    Route::delete('/delete/{id}', [App\Http\Controllers\ItemController::class, 'destroy']);
 });

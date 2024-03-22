@@ -3,7 +3,14 @@
 @section('title', '編集画面')
 
 @section('content_header')
-    <h1>編集画面</h1>
+    <div class="d-flex justify-content-between align-items-center input-group-append ">
+        <h1>編集画面</h1>
+            <form action="{{ url('items/delete/' . $item->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger" onclick="return confirm('削除しますか？');">全てを削除</button>
+            </form>
+    </div>
 @stop
 
 @section('content')

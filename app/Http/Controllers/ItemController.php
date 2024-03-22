@@ -102,7 +102,7 @@ class ItemController extends Controller
                     ]);
                 }
             }
-            return redirect('/items');
+            return redirect('/items')->with('success', '登録が完了しました');
         }
 
         return view('item.add');
@@ -159,13 +159,15 @@ class ItemController extends Controller
                 'img_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
 
-            // 編集対象のアイテムを取得
+            // 更新対象のアイテムを取得
             $item = Item::findOrFail($id);
 
             // 画像がアップロードされた場合の処理
             if ($request->hasFile('img_path')) {
-                // 古い画像を削除
-                Storage::disk('public')->delete($item->img_path);
+                // 古い画像パス＆ファイルを削除
+                $imagePath = $item->img_path;
+                Storage::disk('public')->delete('items/' . basename($imagePath));
+
                 // 新しい画像をアップロード
                 $imagePath = $request->file('img_path')->store('public/items');
                 $imagePath = str_replace('public/', 'storage/', $imagePath);
@@ -204,5 +206,25 @@ class ItemController extends Controller
 
             return redirect('/items')->with('success', '更新が完了しました');
         }
+    }
+
+    /**
+     * 削除処理
+     *
+     * @param int $id
+     * @return view
+     */
+    public function destroy($id)
+    {
+    $item = Item::findOrFail($id);
+
+    // 画像パス＆ファイルを削除
+    $imagePath = $item->img_path;
+    Storage::disk('public')->delete('items/' . basename($imagePath));
+    
+    // アイテムを削除
+    $item->delete();
+    
+    return redirect('/items')->with('success', '完全に削除されました');
     }
 }

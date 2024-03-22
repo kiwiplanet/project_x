@@ -137,6 +137,9 @@
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">登録</button>
                     </div>
+                    <div class="card-footer">
+                        <a href="{{ url('/') }}" class="btn btn-primary">戻る</a>
+                    </div>
                 </form>
             </div>
         </div>
