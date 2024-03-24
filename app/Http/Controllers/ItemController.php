@@ -227,4 +227,16 @@ class ItemController extends Controller
     
     return redirect('/items')->with('success', '完全に削除されました');
     }
+
+    /**
+     * ブックマーク一覧
+     *
+     * @return view
+     */
+    public function bookmark_items()
+    {
+        $items = \Auth::user()->bookmark_items()->orderBy('created_at', 'desc')->paginate(20);
+
+        return view('item.bookmark', compact('items'));
+    }
 }

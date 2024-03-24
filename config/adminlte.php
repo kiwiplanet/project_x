@@ -305,20 +305,14 @@ return [
 
         [
             'text' => 'search',
-            'url'  => '#',
+            'url'  => 'search',
             'icon' => 'fas fa-search',
         ],
 
         [
             'text' => 'bookmark',
-            'url'  => '#',
+            'url'  => 'items/bookmark',
             'icon' => 'fas fa-star',
-        ],
-
-        [
-            'text' => 'calendar',
-            'url'  => '#',
-            'icon' => 'far fa-calendar-check',
         ],
 
         // AdminLTEデフォルト

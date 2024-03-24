@@ -30,10 +30,16 @@ class Item extends Model
     {
         return $this->belongsToMany(SeasonItem::class);
     }
-
+    // Seasonモデルに対してSeasonItemを介してアクセスする
     public function seasons()
     {
         return $this->hasManyThrough(Season::class, SeasonItem::class,'item_id', 'id', 'id', 'season_id');
+    }
+
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
     }
 
     /**

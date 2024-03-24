@@ -24,6 +24,23 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function bookmarks(){
+        return $this->hasMany(Bookmark::class);
+    }
+
+    //あるユーザーがブックマークしたアイテムのリソースを操作できるようにする
+    public function bookmark_items()
+    {
+        return $this->belongsToMany(Item::class, 'bookmarks', 'user_id', 'item_id');
+    }
+
+    //登録または解除する前に、すでにブックマークしているかどうかをチェック
+    public function is_bookmark($itemId)
+    {
+        return $this->bookmarks()->where('item_id', $itemId)->exists();
+    }
+    
+
     /**
      * The attributes that should be hidden for serialization.
      *

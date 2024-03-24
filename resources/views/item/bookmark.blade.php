@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', '食器一覧')
+@section('title', 'ブックマーク一覧')
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center input-group-append ">
-        <h1>食器一覧</h1>
+        <h1>ブックマークリスト</h1>
         <div class="pull-right">
             <a href="{{ url('items/add') }}" class="btn btn-primary">新規登録</a>
             <div class="mt-3">
@@ -76,7 +76,7 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">         
 @stop
 
 @section('js')
