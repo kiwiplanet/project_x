@@ -305,7 +305,7 @@ return [
 
         [
             'text' => 'search',
-            'url'  => 'search',
+            'url'  => 'items/search',
             'icon' => 'fas fa-search',
         ],
 

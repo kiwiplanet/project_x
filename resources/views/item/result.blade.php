@@ -1,15 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'ブックマーク一覧')
+@section('title', '食器一覧')
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center input-group-append ">
-        <h1>ブックマークリスト</h1>
+        <h1>食器一覧</h1>
         <div class="pull-right">
-            <form method="POST" action="{{ route('remove_all_bookmarks') }}" id="removeAllBookmarks">
-            @csrf
-                <button type="submit" class="btn btn-danger" onclick="return confirm('全てのブックマークを解除しますか？');">全てを解除</button>
-            </form>
+            <a href="{{ url('items/add') }}" class="btn btn-primary">新規登録</a>
             <div class="mt-3">
                 <form id="sortForm" action="{{ url('items') }}" method="get">
                     <select id="sortSelect" class="form-select" aria-label="Default select example" name="sort">
@@ -25,39 +22,37 @@
 @stop
 
 @section('content')
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+    @if ($results->isEmpty())
+        <p>検索結果が見つかりませんでした。</p>
+    @else
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
-            @foreach ($items as $item)
+            @foreach ($results as $result)
                 <div class="col mb-4">
                     <div class="card card-sm" style="width: 85%;">
                         <!-- ブックマーク追加フォーム -->
-                        @if (!Auth::user()->is_bookmark($item->id))
-                        <form action="{{ route('bookmark.store', $item) }}" method="POST">
-                        @csrf
-                            <input type="hidden" name="item_id" value="{{ $item->id }}">
+                        @if (!Auth::user()->is_bookmark($result->id))
+                        <form action="{{ route('bookmark.store', $result->id) }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="item_id" value="{{ $result->id }}">
                             <button type="submit" class="btn btn-primary"><i class="bi bi-bookmark-star"></i></button>
                         </form>
                         @else
                         <!-- ブックマーク削除フォーム -->
-                        <form action="{{ route('bookmark.destroy', $item) }}" method="POST">
+                        <form action="{{ route('bookmark.destroy', $result->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger"><i class="bi bi-bookmark-star-fill"></i></button>
                         </form>
                         @endif
-                            <img src="{{ asset($item->img_path) }}" class="card-img-top" alt="{{ $item->name }}">
+                            <img src="{{ asset($result->img_path) }}" class="card-img-top" alt="{{ $result->name }}">
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">食器名：{{ $item->name }}</li>
-                                        <li class="list-group-item">定数：{{ $item->regular_stock }}</li>
-                                        <li class="list-group-item">総在庫数：{{ $item->total_stock }}</li>
+                                        <li class="list-group-item">食器名：{{ $result->name }}</li>
+                                        <li class="list-group-item">定数：{{ $result->regular_stock }}</li>
+                                        <li class="list-group-item">総在庫数：{{ $result->total_stock }}</li>
                                         <li class="list-group-item">利用時期：
-                                            @if ($item->seasons)
-                                                @foreach ($item->seasons as $season)
+                                            @if ($result->seasons)
+                                                @foreach ($result->seasons as $season)
                                                     {{ $season->name }}
                                                     @if (!$loop->last)
                                                         ・
@@ -68,18 +63,19 @@
                                             @endif
                                         </li>
                                     </ul>
-                                    <a href="{{ url('items/show/' . $item->id) }}" class="card-link btn btn-default">詳細</a>
+                                    <a href="{{ url('items/show/' . $result->id) }}" class="card-link btn btn-default">詳細</a>
                                 </div>
                     </div>
                 </div>
             @endforeach
         </div>
     <!-- ページネーション onEachSideで表示されるページ番号の数を制御-->
-    {!! $items->onEachSide(1)->links('pagination::bootstrap-5') !!}
+    {!! $results->onEachSide(1)->links('pagination::bootstrap-5') !!}
+    @endif
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">         
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 @stop
 
 @section('js')

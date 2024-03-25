@@ -36,4 +36,16 @@ class BookmarkController extends Controller
         }
         return back();
     }
+
+    /**
+     * 全てのブックマークの解除処理
+     *
+     * @return redirect
+     */
+    public function removeAllBookmarks()
+{
+    Bookmark::where('user_id', auth()->id())->delete();
+
+    return redirect()->back()->with('success', '全てのブックマークが解除されました');
+}
 }
