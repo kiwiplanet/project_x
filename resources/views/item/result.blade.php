@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', '食器一覧')
+@section('title', '検索結果')
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center input-group-append ">
-        <h1>食器一覧</h1>
+        <h1>検索結果</h1>
         <div class="pull-right">
-            <a href="{{ url('items/add') }}" class="btn btn-primary">新規登録</a>
+            <a href="{{ url('items/search/') }}" class="btn btn-primary">検索画面に戻る</a>
             <div class="mt-3">
                 <form id="sortForm" action="{{ url('items') }}" method="get">
                     <select id="sortSelect" class="form-select" aria-label="Default select example" name="sort">

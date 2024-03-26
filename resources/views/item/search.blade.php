@@ -7,6 +7,11 @@
 @stop
 
 @section('content')
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <div class="search-body">
         <form action="{{ route('items.result') }}" method="GET">
         @csrf

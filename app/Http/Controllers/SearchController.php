@@ -19,10 +19,37 @@ class SearchController extends Controller
         // フォームから送られてきた検索キーワードを取得
         $keyword = $request->input('keyword');
 
+        // 検索キーワードが空の場合は何も返さない
+        if (empty($keyword)) {
+            return redirect()->back()->with('error', '入力がありませんでした。');
+        }
+
         // 検索条件に基づいてアイテムを検索
-        $results = Item::where('name', 'like', '%' . $keyword . '%')->paginate(20);;
+        $results = Item::where(function ($query) use ($keyword) {
+            // 曖昧検索
+            $query->where('name', 'like', '%' . $keyword . '%')
+                ->orWhere('buyer', 'like', '%' . $keyword . '%')
+                // メモ欄：数は完全一致検索、文字は曖昧検索
+                ->orWhere(function ($query) use ($keyword) {
+                    if (is_numeric($keyword)) {
+                        $query->where('detail', '=', $keyword);
+                    } else {
+                        $query->where('detail', 'like', '%' . $keyword . '%');
+                    }
+                })
+                // 完全一致検索
+                ->orWhere('unit_price', '=', $keyword)
+                ->orWhere('regular_stock', '=', $keyword)
+                ->orWhere('total_stock', '=', $keyword)
+                ->orWhere('kitchen_stock', '=', $keyword)
+                ->orWhere('second_stock', '=', $keyword)
+                ->orWhere('smach_stock', '=', $keyword);
+        })
+        ->orderBy('created_at', 'desc')
+        ->paginate(20);
+        
 
         // 検索結果をビューに渡して表示
         return view('item.result', ['results' => $results]);
     }
-}
+}   
