@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\SeasonItem;
+use App\Models\Season;
+use App\Models\Bookmark;
 
 class Item extends Model
 {
@@ -25,7 +28,7 @@ class Item extends Model
         'detail'
     ];
 
-    // アイテムに対する関連付け
+    // 多対多の関係を定義
     public function seasonItems()
     {
         return $this->belongsToMany(SeasonItem::class);

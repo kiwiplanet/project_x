@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Season extends Model
 {
-    // シーズンに対する関連付け
+    // 多対多の関係を定義
     public function seasonItems()
     {
         return $this->belongsToMany(SeasonItem::class);

@@ -16,16 +16,20 @@ class SearchController extends Controller
 
     public function search(Request $request)
     {
-        // フォームから送られてきた検索キーワードを取得
+        // フォームから送られてきた検索キーワードと季節の値を取得
         $keyword = $request->input('keyword');
+        $seasons = $request->input('seasons');
+
 
         // 検索キーワードが空の場合は何も返さない
-        if (empty($keyword)) {
+        if (empty($keyword) && empty($seasons)) {
             return redirect()->back()->with('error', '入力がありませんでした。');
         }
 
-        // 検索条件に基づいてアイテムを検索
-        $results = Item::where(function ($query) use ($keyword) {
+        $query = Item::query();
+        // キーワード検索
+        if (!empty($keyword)) {
+            $query->where(function ($query) use ($keyword) {
             // 曖昧検索
             $query->where('name', 'like', '%' . $keyword . '%')
                 ->orWhere('buyer', 'like', '%' . $keyword . '%')
@@ -44,12 +48,20 @@ class SearchController extends Controller
                 ->orWhere('kitchen_stock', '=', $keyword)
                 ->orWhere('second_stock', '=', $keyword)
                 ->orWhere('smach_stock', '=', $keyword);
-        })
-        ->orderBy('created_at', 'desc')
-        ->paginate(20);
-        
+            });
+        }
 
+         // チェックボックス検索
+        if (!empty($seasons)) {
+            $query->whereHas('seasons', function ($q) use ($seasons) {
+                $q->whereIn('season_id', $seasons);
+            });
+        }
+        
+        // 検索結果を取得し、ページネーションを適用してビューに渡す
+        $results = $query->orderBy('created_at', 'desc')->paginate(20);
+        
         // 検索結果をビューに渡して表示
         return view('item.result', ['results' => $results]);
     }
-}   
+}  
