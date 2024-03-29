@@ -11,7 +11,7 @@
                 <button type="submit" class="btn btn-danger" onclick="return confirm('全てのブックマークを解除しますか？');">全てを解除</button>
             </form>
             <div class="mt-3">
-                <form id="sortForm" action="{{ url('items') }}" method="get">
+                <form id="sortForm" action="{{ route('bookmark') }}" method="get">
                     <select id="sortSelect" class="form-select" aria-label="Default select example" name="sort">
                         <option value="newest">新しい順</option>
                         <option value="oldest">古い順</option>
