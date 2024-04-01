@@ -51,7 +51,9 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">食器名：{{ $item->name }}</li>
                             <li class="list-group-item">定数：{{ $item->regular_stock }}</li>
-                            <li class="list-group-item">総在庫数：{{ $item->total_stock }}</li>
+                            <!-- 三項演算子を用いて下回った時に黄色になる -->
+                            <li class="list-group-item {{ $item->total_stock < $item->regular_stock ? 'yellow-background' : '' }}">
+                                総在庫数：{{ $item->total_stock }}</li>
                             <li class="list-group-item">利用時期：
                                 @if ($item->seasons)
                                     @foreach ($item->seasons as $season)
@@ -77,6 +79,7 @@
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/custom.css">
 @stop
 
 @section('js')

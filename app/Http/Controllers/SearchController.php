@@ -27,6 +27,7 @@ class SearchController extends Controller
         }
 
         $query = Item::query();
+
         // キーワード検索
         if (!empty($keyword)) {
             $query->where(function ($query) use ($keyword) {
@@ -51,7 +52,7 @@ class SearchController extends Controller
             });
         }
 
-         // チェックボックス検索
+        // チェックボックス検索
         if (!empty($seasons)) {
             $query->whereHas('seasons', function ($q) use ($seasons) {
                 $q->whereIn('season_id', $seasons);

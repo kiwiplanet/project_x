@@ -10,4 +10,3 @@ document.getElementById('sortSelect').addEventListener('change', function() {
     form.appendChild(sortInput);
     form.submit();
 });
-
