@@ -19,9 +19,9 @@
                 </div>
             @endif
 
-            <div class="card card-primary">
-                <form method="POST" enctype="multipart/form-data">
-                    @csrf
+            <form method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="card card-primary">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">名前<span class="badge badge-danger">必須</span></label>
@@ -103,50 +103,40 @@
                             @enderror
                         </div>
 
-                        <div>
-                            <label>利用時期（複数選択可）：</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="1" id="allYearCheckbox" name="seasons[]">
-                                <label class="form-check-label" for="allYearCheckbox">通年</label>
-                            </div>
-
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="2" id="springCheckbox" name="seasons[]">
-                                <label class="form-check-label" for="springCheckbox">春</label>
-                            </div>
-
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="3" id="summerCheckbox" name="seasons[]">
-                                <label class="form-check-label" for="summerCheckbox">夏</label>
-                            </div>
-
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="4" id="autumnCheckbox" name="seasons[]">
-                                <label class="form-check-label" for="autumnCheckbox">秋</label>
-                            </div>
-
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="5" id="winterCheckbox" name="seasons[]">
-                                <label class="form-check-label" for="winterCheckbox">冬</label>
-                            </div>
+                        <label>利用時期（複数選択可）：</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" value="1" id="allYearCheckbox" name="seasons[]">
+                            <label class="form-check-label" for="allYearCheckbox">通年</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" value="2" id="springCheckbox" name="seasons[]">
+                            <label class="form-check-label" for="springCheckbox">春</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" value="3" id="summerCheckbox" name="seasons[]">
+                            <label class="form-check-label" for="summerCheckbox">夏</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" value="4" id="autumnCheckbox" name="seasons[]">
+                            <label class="form-check-label" for="autumnCheckbox">秋</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" value="5" id="winterCheckbox" name="seasons[]">
+                            <label class="form-check-label" for="winterCheckbox">冬</label>
                         </div>
                     </div>
-
-                    </div>
-
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">登録</button>
-                    </div>
-                    <div class="card-footer">
-                        <a href="{{ url('/') }}" class="btn btn-primary">戻る</a>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="card-footers">
+                    <button type="submit" class="btn btn-primary btn-lg">登録</button>
+                    <a href="{{ url('/') }}" class="btn btn-secondary btn-lg">戻る</a>
+                </div>
+            </form>
         </div>
     </div>
 @stop
 
 @section('css')
+    <link rel="stylesheet" href="/css/custom.css">
 @stop
 
 @section('js')

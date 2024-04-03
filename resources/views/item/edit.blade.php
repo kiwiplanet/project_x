@@ -4,11 +4,11 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center input-group-append ">
-        <h1>編集画面</h1>
+        <h1>編集</h1>
             <form action="{{ url('items/delete/' . $item->id) }}" method="POST">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn-danger" onclick="return confirm('削除しますか？');">全てを削除</button>
+            <button type="submit" class="btn btn-danger btn-lg" onclick="return confirm('削除しますか？');">全てを削除</button>
             </form>
     </div>
 @stop
@@ -26,12 +26,12 @@
                 </div>
             @endif
 
-            <div class="card card-primary">
-                <form method="POST" enctype="multipart/form-data" action="{{ route('items.update', $item->id) }}">
-                    @csrf
-                    @method('PUT')
+            <form method="POST" enctype="multipart/form-data" action="{{ route('items.update', $item->id) }}">
+                @csrf
+                @method('PUT')
+                <div class="card card-primary">
                     <div class="card-body">
-                    <input type="hidden" name="id" value="{{ $item->id }}">
+                        <input type="hidden" name="id" value="{{ $item->id }}">
                         <div class="form-group">
                             <label for="name">名前<span class="badge badge-danger">必須</span></label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="例）〇〇焼 花型平皿" value="{{ $item->name }}">
@@ -117,49 +117,40 @@
                             @enderror
                         </div>
 
-
-                        <div>
-                            <label>利用時期（複数選択可）：</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="1" id="allYearCheckbox" name="seasons[]" {{ in_array(1, $selectedSeasons) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="allYearCheckbox">通年</label>
-                            </div>
-
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="2" id="springCheckbox" name="seasons[]" {{ in_array(2, $selectedSeasons) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="springCheckbox">春</label>
-                            </div>
-
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="3" id="summerCheckbox" name="seasons[]" {{ in_array(3, $selectedSeasons) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="summerCheckbox">夏</label>
-                            </div>
-
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="4" id="autumnCheckbox" name="seasons[]" {{ in_array(4, $selectedSeasons) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="autumnCheckbox">秋</label>
-                            </div>
-
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="5" id="winterCheckbox" name="seasons[]" {{ in_array(5, $selectedSeasons) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="winterCheckbox">冬</label>
-                            </div>
+                        <label>利用時期（複数選択可）：</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" value="1" id="allYearCheckbox" name="seasons[]" {{ in_array(1, $selectedSeasons) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="allYearCheckbox">通年</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" value="2" id="springCheckbox" name="seasons[]" {{ in_array(2, $selectedSeasons) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="springCheckbox">春</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" value="3" id="summerCheckbox" name="seasons[]" {{ in_array(3, $selectedSeasons) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="summerCheckbox">夏</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" value="4" id="autumnCheckbox" name="seasons[]" {{ in_array(4, $selectedSeasons) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="autumnCheckbox">秋</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" value="5" id="winterCheckbox" name="seasons[]" {{ in_array(5, $selectedSeasons) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="winterCheckbox">冬</label>
                         </div>
                     </div>
-
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">更新</button>
-                    </div>
-                    <div class="card-footer">
-                        <a href="{{ url('items/show/' . $item->id) }}" class="btn btn-primary">戻る</a>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="card-footers">
+                    <button type="submit" class="btn btn-primary btn-lg">更新</button>
+                    <a href="{{ url('items/show/' . $item->id) }}" class="btn btn-secondary btn-lg">戻る</a>
+                </div>
+            </form>
         </div>
     </div>
 @stop
 
 @section('css')
+    <link rel="stylesheet" href="/css/custom.css">
 @stop
 
 @section('js')

@@ -1,5 +1,73 @@
 @charset "UTF-8";
 
+/* 全体 */
+/* カードとヘッダーの間隔 */
+.card{
+    margin: 10px auto;
+}
+
+/* 総数が定数を下回った場合 */
 .yellow-background {
     background-color: #FFD700;
+}
+
+/* ボタン対して（新規登録・詳細・編集画面） */
+.card-footers{
+    display: flex;
+    justify-content: right;
+    margin: 30px auto;
+}
+
+.card-footers button{
+    margin-right: 30px;
+}
+
+
+
+/* ホーム画面 */
+.content-home {
+    font-family: "Zhi Mang Xing", cursive;
+    font-weight: 400;
+    font-style: normal;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.content-home p{
+    font-size: 6.8vw;
+}
+
+.content-home h1{
+    font-size: 13.889vw;
+}
+
+
+
+/* 検索画面 */
+.search-body{
+    margin-top: 10px;
+}
+
+.search-title{
+    font-size: 1.3rem;
+}
+
+.keyword-group{
+    width: 70%;
+    margin: 30px 0;
+}
+
+.form-keyword{
+    margin-right: 30px;
+}
+
+.category-group{
+    margin: 20px 0 30px 0;
+}
+
+.checkbox-search{
+    margin-right: 50px;
+    font-size: 21px;
 }

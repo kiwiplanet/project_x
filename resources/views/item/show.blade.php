@@ -3,7 +3,7 @@
 @section('title', '詳細画面')
 
 @section('content_header')
-    <h1>詳細画面</h1>
+    <h1>食器詳細</h1>
 @stop
 
 @section('content')
@@ -19,9 +19,9 @@
                 </div>
             @endif
 
-            <div class="card card-primary">
-                <form method="POST" enctype="multipart/form-data">
-                    @csrf
+            <form method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="card card-primary">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">食器名：</label>{{ $item->name }}
@@ -71,31 +71,29 @@
 
                         <div class="form-group">
                             <label>利用時期：</label>
-                                @if ($item->seasons)
-                                    @foreach ($item->seasons as $season)
-                                        {{ $season->name }}
-                                        @if (!$loop->last)
-                                            ・
-                                        @endif
-                                    @endforeach
-                                @else
-                                    設定がありません
-                                @endif
+                            @if ($item->seasons)
+                                @foreach ($item->seasons as $season)
+                                    {{ $season->name }}
+                                    @if (!$loop->last)
+                                        ・
+                                    @endif
+                                @endforeach
+                            @else
+                                設定がありません
+                            @endif
                         </div>
                     </div>
-
-                    </div>
-
-                    <div class="card-footer">
-                    <a href="{{ url('items/edit/' . $item->id) }}" class="btn btn-primary">編集</a>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="card-footers">
+                    <a href="{{ url('items/edit/' . $item->id) }}" class="btn btn-primary btn-lg">編集</a>
+                </div>
+            </form>
         </div>
     </div>
 @stop
 
 @section('css')
+    <link rel="stylesheet" href="/css/custom.css">
 @stop
 
 @section('js')
