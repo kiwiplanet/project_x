@@ -228,17 +228,17 @@ class ItemController extends Controller
         
         switch ($sortBy) {
             case 'oldest':        //古い順
-                $items = auth()->user()->bookmark_items()->with('seasons')->orderBy('created_at', 'asc')->paginate(20);
+                $items = Item::whereHas('bookmarks')->with('seasons')->orderBy('created_at', 'asc')->paginate(20);
                 break;
             case 'most_stock':    //多い順
-                $items = auth()->user()->bookmark_items()->with('seasons')->orderBy('total_stock', 'desc')->paginate(20);
+                $items = Item::whereHas('bookmarks')->with('seasons')->orderBy('total_stock', 'desc')->paginate(20);
                 break;
             case 'least_stock':   //少ない順
-                $items = auth()->user()->bookmark_items()->with('seasons')->orderBy('total_stock', 'asc')->paginate(20);
+                $items = Item::whereHas('bookmarks')->with('seasons')->orderBy('total_stock', 'asc')->paginate(20);
                 break;
             case 'newest':        //新しい順
             default:
-                $items = auth()->user()->bookmark_items()->with('seasons')->orderBy('created_at', 'desc')->paginate(20);
+                $items = Item::whereHas('bookmarks')->with('seasons')->orderBy('created_at', 'desc')->paginate(20);
                 break;
         }
         return view('item.bookmark', compact('items'));
