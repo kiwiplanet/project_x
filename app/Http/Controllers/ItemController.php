@@ -12,16 +12,6 @@ use Illuminate\Support\Facades\Storage;
 class ItemController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
      * 食器一覧
      */
     public function index(Request $request)
