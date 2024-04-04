@@ -43,7 +43,7 @@ Route::group(['middleware' => ['auth']], function () {
         //ブックマークの登録・解除・表示・全て解除
         Route::post('/{itemId}/bookmark', [App\Http\Controllers\BookmarkController::class, 'store'])->name('bookmark.store');
         Route::delete('/{itemId}/bookmark', [App\Http\Controllers\BookmarkController::class, 'destroy'])->name('bookmark.destroy');
-        Route::get('/bookmark', [App\Http\Controllers\ItemController::class, 'bookmark_items'])->name('bookmark');
+        Route::get('/bookmark', [App\Http\Controllers\BookmarkController::class, 'bookmark_items'])->name('bookmark');
         Route::post('remove_all_bookmarks', [App\Http\Controllers\BookmarkController::class, 'removeAllBookmarks'])->name('remove_all_bookmarks');
 
         //検索画面の表示・検索

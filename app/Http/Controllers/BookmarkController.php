@@ -26,7 +26,7 @@ class BookmarkController extends Controller
     /**
      * ブックマークの解除処理
      *
-     * @param int $itemId
+      * @param int $itemId
      * @return redirect
      */
     public function destroy($itemId) {
@@ -38,14 +38,48 @@ class BookmarkController extends Controller
     }
 
     /**
+     * ブックマーク一覧
+     */
+    public function bookmark_items(Request $request)
+    {
+        // ブックマーク一覧取得（ソート）
+        $sortBy = $request->input('sort', 'newest');
+        
+        // ログインユーザーのブックマーク一覧取得クエリ
+        $items = auth()->user()->bookmark_items()->with('seasons');
+    
+        // ソートに応じて並び替え
+        switch ($sortBy) {
+            case 'oldest':
+                $items->orderBy('created_at', 'asc');
+                break;
+            case 'most_stock':
+                $items->orderBy('total_stock', 'desc');
+                break;
+            case 'least_stock':
+                $items->orderBy('total_stock', 'asc');
+                break;
+            case 'newest':
+            default:
+                $items->orderBy('created_at', 'desc');
+                break;
+        }
+    
+        // ページネーションを適用してビューに渡す
+        $items = $items->paginate(20);
+    
+        return view('item.bookmark', compact('items'));
+    }
+    
+    /**
      * 全てのブックマークの解除処理
      *
      * @return redirect
      */
     public function removeAllBookmarks()
     {
-    Bookmark::where('user_id', auth()->id())->delete();
+        Bookmark::where('user_id', auth()->id())->delete();
 
-    return redirect()->back()->with('success', '全てのブックマークが解除されました');
+        return redirect()->back()->with('success', '全てのブックマークが解除されました');
     }
 }

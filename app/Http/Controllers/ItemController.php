@@ -217,30 +217,4 @@ class ItemController extends Controller
     
     return redirect('/items')->with('success', '完全に削除されました');
     }
-
-    /**
-     * ブックマーク一覧
-     */
-    public function bookmark_items(Request $request)
-    {
-        // ブックマーク一覧取得（ソート）
-        $sortBy = $request->input('sort', 'newest');
-        
-        switch ($sortBy) {
-            case 'oldest':        //古い順
-                $items = Item::whereHas('bookmarks')->with('seasons')->orderBy('created_at', 'asc')->paginate(20);
-                break;
-            case 'most_stock':    //多い順
-                $items = Item::whereHas('bookmarks')->with('seasons')->orderBy('total_stock', 'desc')->paginate(20);
-                break;
-            case 'least_stock':   //少ない順
-                $items = Item::whereHas('bookmarks')->with('seasons')->orderBy('total_stock', 'asc')->paginate(20);
-                break;
-            case 'newest':        //新しい順
-            default:
-                $items = Item::whereHas('bookmarks')->with('seasons')->orderBy('created_at', 'desc')->paginate(20);
-                break;
-        }
-        return view('item.bookmark', compact('items'));
-    }
 }
