@@ -42,31 +42,37 @@ class BookmarkController extends Controller
      */
     public function bookmark_items(Request $request)
     {
-        // ブックマーク一覧取得（ソート）
-        $sortBy = $request->input('sort', 'newest');
+        // クエリビルダーを初期化
+        $query = Item::query();
         
-        // ログインユーザーのブックマーク一覧取得クエリ
-        $items = auth()->user()->bookmark_items()->with('seasons');
+        // ブックマークされたアイテムのみを取得するクエリを追加
+        $query->whereHas('bookmarks', function ($query) {
+            $userId = auth()->id();
+            $query->where('user_id', $userId);
+        });
     
-        // ソートに応じて並び替え
-        switch ($sortBy) {
-            case 'oldest':
-                $items->orderBy('created_at', 'asc');
-                break;
-            case 'most_stock':
-                $items->orderBy('total_stock', 'desc');
-                break;
-            case 'least_stock':
-                $items->orderBy('total_stock', 'asc');
-                break;
-            case 'newest':
-            default:
-                $items->orderBy('created_at', 'desc');
-                break;
+        // 並び替えを行う
+        if ($request->has('sort')) {
+            $sortColumn = $request->input('sort');
+            $sortDirection = $request->input('direction', 'asc');
+    
+            // 並び替えの条件を設定する
+            if ($sortColumn === 'mostStock') {
+                $query->orderBy('total_stock', 'desc');
+            } elseif ($sortColumn === 'leastStock') {
+                $query->orderBy('total_stock', 'asc');
+            } elseif ($sortColumn === 'newest') {
+                $query->orderBy('created_at', 'desc');
+            } elseif ($sortColumn === 'oldest') {
+                $query->orderBy('created_at', 'asc');
+            }
+        } else {
+            // デフォルトは作成日時の新しい順
+            $query->orderBy('created_at', 'desc');
         }
     
         // ページネーションを適用してビューに渡す
-        $items = $items->paginate(20);
+        $items = $query->paginate(20)->onEachSide(1);
     
         return view('item.bookmark', compact('items'));
     }

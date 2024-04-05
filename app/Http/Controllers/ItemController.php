@@ -16,24 +16,30 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        // 食器一覧取得（ソート）
-        $sortBy = $request->input('sort', 'newest');
-
-        switch ($sortBy) {
-            case 'oldest':        //古い順
-                $items = Item::with('seasons')->orderBy('created_at', 'asc')->paginate(20);
-                break;
-            case 'most_stock':    //多い順
-                $items = Item::with('seasons')->orderBy('total_stock', 'desc')->paginate(20);
-                break;
-            case 'least_stock':   //少ない順
-                $items = Item::with('seasons')->orderBy('total_stock', 'asc')->paginate(20);
-                break;
-            case 'newest':        //新しい順
-            default:
-                $items = Item::with('seasons')->orderBy('created_at', 'desc')->paginate(20);
-                break;
+        $query = Item::query();
+        
+        // 並び替えを行う
+        if ($request->has('sort')) {
+            $sortColumn = $request->input('sort');
+            $sortDirection = $request->input('direction', 'asc');
+    
+            // 並び替えの条件を変更する
+            if ($sortColumn === 'mostStock') {
+                $query->orderBy('total_stock', 'desc');
+            } elseif ($sortColumn === 'leastStock') {
+                $query->orderBy('total_stock', 'asc');
+            } elseif ($sortColumn === 'newest') {
+                $query->orderBy('created_at', 'desc');
+            } elseif ($sortColumn === 'oldest') {
+                $query->orderBy('created_at', 'asc');
+            }
+        } else {
+            // デフォルトは作成日時の新しい順
+            $query->orderBy('created_at', 'desc');
         }
+        
+        $items = $query->paginate(20)->onEachSide(1);
+        
         return view('item.index', compact('items'));
     }
 
