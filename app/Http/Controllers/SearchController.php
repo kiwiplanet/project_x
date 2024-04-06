@@ -26,20 +26,20 @@ class SearchController extends Controller
             return redirect()->back()->with('error', '入力がありませんでした。');
         }
 
-        $query = Item::query();
+        $results = Item::query();
 
         // キーワード検索
         if (!empty($keyword)) {
-            $query->where(function ($query) use ($keyword) {
+            $results->where(function ($results) use ($keyword) {
             // 曖昧検索
-            $query->where('name', 'like', '%' . $keyword . '%')
+            $results->where('name', 'like', '%' . $keyword . '%')
                 ->orWhere('buyer', 'like', '%' . $keyword . '%')
                 // メモ欄：数は完全一致検索、文字は曖昧検索
-                ->orWhere(function ($query) use ($keyword) {
+                ->orWhere(function ($results) use ($keyword) {
                     if (is_numeric($keyword)) {
-                        $query->where('detail', '=', $keyword);
+                        $results->where('detail', '=', $keyword);
                     } else {
-                        $query->where('detail', 'like', '%' . $keyword . '%');
+                        $results->where('detail', 'like', '%' . $keyword . '%');
                     }
                 })
                 // 完全一致検索
@@ -54,13 +54,31 @@ class SearchController extends Controller
 
         // チェックボックス検索
         if (!empty($seasons)) {
-            $query->whereHas('seasons', function ($q) use ($seasons) {
+            $results->whereHas('seasons', function ($q) use ($seasons) {
                 $q->whereIn('season_id', $seasons);
             });
         }
+        // 並び替えを行う
+        if ($request->has('sort')) {
+            $sortColumn = $request->input('sort');
+    
+            // 並び替えの条件を変更する
+            if ($sortColumn === 'mostStock') {
+                $results->orderBy('total_stock', 'desc');
+            } elseif ($sortColumn === 'leastStock') {
+                $results->orderBy('total_stock', 'asc');
+            } elseif ($sortColumn === 'newest') {
+                $results->orderBy('created_at', 'desc');
+            } elseif ($sortColumn === 'oldest') {
+                $results->orderBy('created_at', 'asc');
+            }
+        } else {
+            // デフォルトは作成日時の新しい順
+            $results->orderBy('created_at', 'desc');
+        }
         
         // 検索結果を取得し、ページネーションを適用してビューに渡す
-        $results = $query->orderBy('created_at', 'desc')->paginate(20);
+        $results = $results->paginate(20);
         
         // 検索結果をビューに渡して表示
         return view('item.result', ['results' => $results]);

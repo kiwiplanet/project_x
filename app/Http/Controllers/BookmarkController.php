@@ -54,7 +54,6 @@ class BookmarkController extends Controller
         // 並び替えを行う
         if ($request->has('sort')) {
             $sortColumn = $request->input('sort');
-            $sortDirection = $request->input('direction', 'asc');
     
             // 並び替えの条件を設定する
             if ($sortColumn === 'mostStock') {

@@ -1,8 +1,6 @@
     
     "use strict";
 
-    // このファイルは並び替え機能を実装するためのものです
-
     // ページのDOMが完全に読み込まれたときに実行される処理
     document.addEventListener("DOMContentLoaded", function() {
         // セレクト要素を取得
@@ -21,22 +19,31 @@
 
     document.getElementById('sortOptions').addEventListener('change', function() {
         var selectedOption = this.value;
+
+        // window.location.href = http://127.0.0.1:8000/items/result ?_token=qke8c0tASiiJBUTp6iPYBax3kbZYHwSMwoYh633J&keyword=&seasons%5B%5D=1&seasons%5B%5D=5&sort=mostStock
+        const url = new URL(window.location.href);
+
+        // url.search = _token=qke8c0tASiiJBUTp6iPYBax3kbZYHwSMwoYh633J&keyword=&seasons%5B%5D=1&seasons%5B%5D=5&sort=mostStock
+        let params = new URLSearchParams(url.search);
         
         switch(selectedOption) {
             case 'newest':
-                window.location.href = '?sort=newest';
+                params.set("sort","newest")
                 break;
             case 'oldest':
-                window.location.href = '?sort=oldest';
+                params.set("sort","oldest")
                 break;
             case 'mostStock':
-                window.location.href = '?sort=mostStock';
+                params.set("sort","mostStock")
                 break;
             case 'leastStock':
-            window.location.href = '?sort=leastStock';
+                params.set("sort","leastStock")
                 break;
             default:
                 window.location.href = '';
                 break;
         }
+        let currentURL = window.location.href
+        let newURL = currentURL.split("?")[0]
+        window.location.href = newURL + "?" + params.toString()
     });

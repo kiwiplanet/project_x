@@ -8,14 +8,12 @@
         <div class="pull-right">
             <a href="{{ url('items/search/') }}" class="btn btn-primary">検索画面に戻る</a>
             <div class="mt-3">
-                <form id="sortForm" action="{{ route( 'items.result') }}" method="get">
-                    <select id="sortSelect" class="form-select" aria-label="Default select example" name="sort">
-                        <option value="newest">新しい順</option>
-                        <option value="oldest">古い順</option>
-                        <option value="most_stock">在庫多い順</option>
-                        <option value="least_stock">在庫少ない順</option>
-                    </select>
-                </form>
+                <select id="sortOptions">
+                    <option value="newest">新しい順</option>
+                    <option value="oldest">古い順</option>
+                    <option value="mostStock">在庫多い順</option>
+                    <option value="leastStock">在庫少ない順</option>
+                </select>
             </div>
         </div>
     </div>
