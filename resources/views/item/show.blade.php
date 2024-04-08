@@ -9,16 +9,6 @@
 @section('content')
     <div class="row">
         <div class="col-md-10">
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
             <form method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card card-primary">
@@ -62,24 +52,20 @@
 
                         <div class="form-group" style="max-width: 300px;">
                             <label for="img_path">画像：</label>
-                            @if ($item->img_path)
-                                <img src="{{ asset($item->img_path) }}" class="card-img-top" alt="食器画像">
-                            @else
-                                <p>画像はありません</p>
-                            @endif
+                            <img src="{{ asset($item->img_path) }}" class="card-img-top" alt="食器画像">
                         </div>
 
                         <div class="form-group">
                             <label>利用時期：</label>
-                            @if ($item->seasons)
+                            @if ($item->seasons->isEmpty())
+                                設定なし
+                            @else
                                 @foreach ($item->seasons as $season)
                                     {{ $season->name }}
                                     @if (!$loop->last)
                                         ・
                                     @endif
                                 @endforeach
-                            @else
-                                設定がありません
                             @endif
                         </div>
                     </div>

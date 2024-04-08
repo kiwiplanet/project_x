@@ -51,15 +51,15 @@
                                 <li class="list-group-item {{ $result->total_stock < $result->regular_stock ? 'yellow-background' : '' }}">
                                 総在庫数：{{ $result->total_stock }}</li>
                                 <li class="list-group-item">利用時期：
-                                    @if ($result->seasons)
+                                    @if ($result->seasons->isEmpty())
+                                        設定なし
+                                    @else
                                         @foreach ($result->seasons as $season)
                                             {{ $season->name }}
                                             @if (!$loop->last)
                                                 ・
                                             @endif
                                         @endforeach
-                                    @else
-                                        設定がありません
                                     @endif
                                 </li>
                             </ul>

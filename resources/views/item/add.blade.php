@@ -66,25 +66,16 @@
                         <div class="form-group">
                             <label for="kitchen_stock">調理場在庫数</label>
                             <input type="number" class="form-control" id="kitchen_stock" name="kitchen_stock" placeholder="例）50個→50">
-                            @error('kitchen_stock')
-                            <span style="color:red;">数値を入力してください。</span>
-                            @enderror
                         </div>
                         
                         <div class="form-group">
                             <label for="second_stock">2階倉庫在庫数</label>
                             <input type="number" class="form-control" id="second_stock" name="second_stock" placeholder="例）50個→50">
-                            @error('second_stock')
-                            <span style="color:red;">数値を入力してください。</span>
-                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="smach_stock">破損数</label>
                             <input type="number" class="form-control" id="smach_stock" name="smach_stock" placeholder="例）100個→100">
-                            @error('smach_stock')
-                            <span style="color:red;">数値を入力してください。</span>
-                            @enderror
                         </div>
 
                         <div class="form-group">

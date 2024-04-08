@@ -59,41 +59,26 @@
                         <div class="form-group">
                             <label for="regular_stock">定数<span class="badge badge-danger">必須</span></label>
                             <input type="number" class="form-control" id="regular_stock" name="regular_stock" placeholder="例）100個→100" value="{{ $item->regular_stock }}">
-                            @error('regular_stock')
-                            <span style="color:red;">定数の入力は必須です。数値を入力してください。</span>
-                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="total_stock">総在庫数<span class="badge badge-danger">必須</span></label>
                             <input type="number" class="form-control" id="total_stock" name="total_stock" placeholder="例）100個→100" value="{{ $item->total_stock }}">
-                            @error('total_stock')
-                            <span style="color:red;">総在庫数の入力は必須です。数値を入力してください。</span>
-                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="kitchen_stock">調理場在庫数</label>
                             <input type="number" class="form-control" id="kitchen_stock" name="kitchen_stock" placeholder="例）50個→50" value="{{ $item->kitchen_stock }}">
-                            @error('kitchen_stock')
-                            <span style="color:red;">数値を入力してください。</span>
-                            @enderror
                         </div>
                         
                         <div class="form-group">
                             <label for="second_stock">2階倉庫在庫数</label>
                             <input type="number" class="form-control" id="second_stock" name="second_stock" placeholder="例）50個→50" value="{{ $item->second_stock }}">
-                            @error('second_stock')
-                            <span style="color:red;">数値を入力してください。</span>
-                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="smach_stock">破損数</label>
                             <input type="number" class="form-control" id="smach_stock" name="smach_stock" placeholder="例）100個→100" value="{{ $item->smach_stock }}">
-                            @error('smach_stock')
-                            <span style="color:red;">数値を入力してください。</span>
-                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -106,15 +91,8 @@
 
                         <div class="form-group" style="max-width: 300px;">
                             <label for="img_path">画像<span class="badge badge-danger">必須</span></label>
-                            @if ($item->img_path)
                                 <img src="{{ asset($item->img_path) }}" class="card-img-top" alt="食器画像">
-                            @else
-                                <p>画像はありません</p>
-                            @endif
                             <input type="file" class="btn btn-light" id="img_path" name="img_path">
-                            @error('img_path')
-                                <span style="color:red;">画像の入力は必須です。</span>
-                            @enderror
                         </div>
 
                         <label>利用時期（複数選択可）：</label>

@@ -262,6 +262,7 @@ return [
         'second_stock' => '2階倉庫在庫数',
         'smach_stock' => '破損数',
         'detail' => 'メモ',
-        'img_path' => '画像'
+        'img_path' => '画像',
+        'staff_id' => '社員番号'
     ],
 ];
