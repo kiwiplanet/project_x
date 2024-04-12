@@ -51,7 +51,7 @@
                             <label for="regular_stock">定数<span class="badge badge-danger">必須</span></label>
                             <input type="number" class="form-control" id="regular_stock" name="regular_stock" placeholder="例）100個→100">
                             @error('regular_stock')
-                            <span style="color:red;">定数の入力は必須です。数値を入力してください。</span>
+                            <span style="color:red;">定数の入力は必須です。（最大1000個まで）</span>
                             @enderror
                         </div>
 
@@ -59,7 +59,7 @@
                             <label for="total_stock">総在庫数<span class="badge badge-danger">必須</span></label>
                             <input type="number" class="form-control" id="total_stock" name="total_stock" placeholder="例）100個→100">
                             @error('total_stock')
-                            <span style="color:red;">総在庫数の入力は必須です。数値を入力してください。</span>
+                            <span style="color:red;">総在庫数の入力は必須です。（最大1000個まで）</span>
                             @enderror
                         </div>
 
