@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="unit_price">単価<span class="badge badge-danger">必須</span></label>
+                            <label for="unit_price">単価<span class="badge badge-danger">必須</span>(半角数字)</label>
                             <input type="text" class="form-control" id="unit_price" name="unit_price" placeholder="例）100円→100 ※セットの場合も1コ当たりで入力">
                             @error('unit_price')
                             <span style="color:red;">単価の入力は必須です。価格を入力してください。</span>
