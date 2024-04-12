@@ -53,7 +53,7 @@ class ItemController extends Controller
             $this->validate($request, [
                 'name' => 'required|max:100',
                 'buyer' => 'required|max:100',
-                'unit_price' => 'required|numeric|gt:0',
+                'unit_price' => 'required|numeric|gt:0|max:99999999',
                 'regular_stock' => 'required|integer|min:0|max:1000',
                 'total_stock' => 'required|integer|min:0|max:1000',
                 'kitchen_stock' => 'nullable|integer|min:0|max:1000',
