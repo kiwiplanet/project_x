@@ -44,7 +44,7 @@
                         <button type="submit" class="btn btn-danger"><i class="bi bi-bookmark-star-fill"></i></button>
                     </form>
                     @endif
-                    <img src="{{ asset($item->img_path) }}" class="card-img-top" alt="{{ $item->name }}">
+                    <img src="{{ Storage::disk('s3')->url($item->img_path) }}" class="card-img-top" alt="{{ $item->name }}">
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">食器名：{{ $item->name }}</li>
