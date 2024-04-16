@@ -68,7 +68,7 @@ class ItemController extends Controller
             {
             $disk = Storage::disk('s3');
             // S3にファイルを保存し、保存したファイル名を取得する
-            $fileName = $disk->put('', $request->file('img_path'));
+            $imgPath = $disk->put('', $request->file('img_path'));
             // $fileNameには
             // https://saitobucket3.s3.amazonaws.com/uhgKiZeJXMFhL9Vr7yT7XvlJqonPNx30xbJYoEo0.jpeg
             // のような画像へのフルパスが格納されている
@@ -89,7 +89,7 @@ class ItemController extends Controller
             $item = Item::create([
                 'user_id' => Auth::user()->id,
                 'name' => $request->name,
-                'img_path' => $request->imagePath, // 保存した画像のパスを使用
+                'img_path' => $imgPath ?? null, // 保存した画像のパスを使用
                 'buyer' => $request->buyer,
                 'unit_price' => $request->unit_price,
                 'regular_stock' => $request->regular_stock,
