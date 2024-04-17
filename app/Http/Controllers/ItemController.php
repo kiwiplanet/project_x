@@ -71,12 +71,12 @@ class ItemController extends Controller
             $imgPath = $disk->put('', $request->file('img_path'));
             }
 
-            // 画像のアップロードと保存(ローカル編)
+            // //画像のアップロードと保存(ローカル編)
             // if ($request->hasFile('img_path')) {
             //     $imagePath = $request->file('img_path')->store('public/items');
             //     $imagePath = str_replace('public/', 'storage/', $imagePath);
             // } else {
-                // 画像がアップロードされていない場合、$imagePathをnullに設定
+            // //画像がアップロードされていない場合、$imagePathをnullに設定
             //     $imagePath = null;
             // }
 
@@ -165,18 +165,28 @@ class ItemController extends Controller
             // 更新対象のアイテムを取得
             $item = Item::findOrFail($id);
 
-            // 画像がアップロードされた場合の処理
+            // 画像がアップロードされた場合の処理(S3編)
             if ($request->hasFile('img_path')) {
                 // 古い画像パス＆ファイルを削除
-                $imagePath = $item->img_path;
-                Storage::disk('public')->delete('items/' . basename($imagePath));
-
+                Storage::disk('s3')->delete($item->img_path);
                 // 新しい画像をアップロード
-                $imagePath = $request->file('img_path')->store('public/items');
-                $imagePath = str_replace('public/', 'storage/', $imagePath);
+                $imagePath = $request->file('img_path')->store('items', 's3');
                 // 画像パスを更新
                 $item->img_path = $imagePath;
             }
+
+            // 画像がアップロードされた場合の処理（ローカル編）
+            // if ($request->hasFile('img_path')) {
+            //     // 古い画像パス＆ファイルを削除
+            //     $imagePath = $item->img_path;
+            //     Storage::disk('public')->delete('items/' . basename($imagePath));
+
+            //     // 新しい画像をアップロード
+            //     $imagePath = $request->file('img_path')->store('public/items');
+            //     $imagePath = str_replace('public/', 'storage/', $imagePath);
+            //     // 画像パスを更新
+            //     $item->img_path = $imagePath;
+            // }
 
             // フォームからの入力を取得し、アップデート
             $item->name = $request->input('name');
@@ -222,8 +232,7 @@ class ItemController extends Controller
     $item = Item::findOrFail($id);
 
     // 画像パス＆ファイルを削除
-    $imagePath = $item->img_path;
-    Storage::disk('public')->delete('items/' . basename($imagePath));
+    Storage::disk('s3')->delete($item->img_path);
     
     // アイテムを削除
     $item->delete();
