@@ -47,29 +47,29 @@
                             <button type="submit" class="btn btn-danger"><i class="bi bi-bookmark-star-fill"></i></button>
                         </form>
                         @endif
-                            <img src="{{ asset($item->img_path) }}" class="card-img-top" alt="{{ $item->name }}">
-                                <div class="card-body">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">食器名：{{ $item->name }}</li>
-                                        <li class="list-group-item">定数：{{ $item->regular_stock }}</li>
-                                        <!-- 三項演算子を用いて下回った時に黄色になる -->
-                                        <li class="list-group-item {{ $item->total_stock < $item->regular_stock ? 'yellow-background' : '' }}">
-                                        総在庫数：{{ $item->total_stock }}</li>
-                                        <li class="list-group-item">利用時期：
-                                            @if ($item->seasons->isEmpty())
-                                                設定なし
-                                            @else
-                                                @foreach ($item->seasons as $season)
-                                                    {{ $season->name }}
-                                                    @if (!$loop->last)
-                                                        ・
-                                                    @endif
-                                                @endforeach
+                        <img src="{{ Storage::disk('s3')->url($item->img_path) }}" class="card-img-top" alt="{{ $item->name }}">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">食器名：{{ $item->name }}</li>
+                                <li class="list-group-item">定数：{{ $item->regular_stock }}</li>
+                                <!-- 三項演算子を用いて下回った時に黄色になる -->
+                                <li class="list-group-item {{ $item->total_stock < $item->regular_stock ? 'yellow-background' : '' }}">
+                                総在庫数：{{ $item->total_stock }}</li>
+                                <li class="list-group-item">利用時期：
+                                    @if ($item->seasons->isEmpty())
+                                        設定なし
+                                    @else
+                                        @foreach ($item->seasons as $season)
+                                            {{ $season->name }}
+                                            @if (!$loop->last)
+                                                ・
                                             @endif
-                                        </li>
-                                    </ul>
-                                    <a href="{{ url('items/show/' . $item->id) }}" class="card-link btn btn-default">詳細</a>
-                                </div>
+                                        @endforeach
+                                    @endif
+                                </li>
+                            </ul>
+                            <a href="{{ url('items/show/' . $item->id) }}" class="card-link btn btn-default">詳細</a>
+                        </div>
                     </div>
                 </div>
             @endforeach

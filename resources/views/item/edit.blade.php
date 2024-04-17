@@ -91,7 +91,7 @@
 
                         <div class="form-group" style="max-width: 300px;">
                             <label for="img_path">画像<span class="badge badge-danger">必須</span></label>
-                                <img src="{{ asset($item->img_path) }}" class="card-img-top" alt="食器画像">
+                                <img src="{{ Storage::disk('s3')->url($item->img_path) }}" class="card-img-top" alt="食器画像">
                             <input type="file" class="btn btn-light" id="img_path" name="img_path">
                         </div>
 

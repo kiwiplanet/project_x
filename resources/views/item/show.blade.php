@@ -52,7 +52,7 @@
 
                         <div class="form-group" style="max-width: 300px;">
                             <label for="img_path">画像：</label>
-                            <img src="{{ asset($item->img_path) }}" class="card-img-top" alt="食器画像">
+                            <img src="{{ Storage::disk('s3')->url($item->img_path) }}" class="card-img-top" alt="食器画像">
                         </div>
 
                         <div class="form-group">

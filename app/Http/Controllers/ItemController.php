@@ -69,11 +69,6 @@ class ItemController extends Controller
             $disk = Storage::disk('s3');
             // S3にファイルを保存し、保存したファイル名を取得する
             $imgPath = $disk->put('', $request->file('img_path'));
-            // $fileNameには
-            // https://saitobucket3.s3.amazonaws.com/uhgKiZeJXMFhL9Vr7yT7XvlJqonPNx30xbJYoEo0.jpeg
-            // のような画像へのフルパスが格納されている
-            // このフルパスをDBに格納しておくと、画像を表示させるのは簡単になる
-            // dd($disk->url($fileName));
             }
 
             // 画像のアップロードと保存(ローカル編)
