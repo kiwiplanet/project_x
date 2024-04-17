@@ -170,7 +170,7 @@ class ItemController extends Controller
                 // 古い画像パス＆ファイルを削除
                 Storage::disk('s3')->delete($item->img_path);
                 // 新しい画像をアップロード
-                $imagePath = $request->file('img_path')->store('s3');
+                $imagePath = $request->file('img_path')->store('', 's3');
                 // 画像パスを更新
                 $item->img_path = $imagePath;
             }
