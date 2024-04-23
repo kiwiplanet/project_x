@@ -1,43 +1,36 @@
-## 商品管理システム
+# 食器在庫管理システム
 
-### 環境構築手順
+## 概要
+食器管理システムは自身が料亭で働いていた経験を元に作成したサービスです。
 
-* Gitクローン
-* .env.example をコピーして .env を作成
-* MySQLのデータベース作成（名前：item_management）
-* Macの場合 .env の DB_PASSWORD を root に修正（Windowsは修正不要）
+高級料理店やホテルのレストランなど和洋問わず幅広いターゲットユーザー向けに利用できるシステムです。
 
-    ```INI
-    DB_PASSWORD=root
-    ```
+例えば、在庫管理機能が食器のロスを減らし、コスト削減につながり、ブックマーク機能で大きな会食や特別な行事などで必要な食器を簡単に見つけられるよう提供します。
 
-* APP_KEY生成
+このサービスにより、時間の有意義な活用が可能となります。
 
-    ```console
-    php artisan key:generate
-    ```
+## 主な機能
+- 会員登録機能
+- ログイン・ログアウト機能
+- 食器在庫一覧機能
+- 新規登録、編集、削除機能
+- キーワード・絞り込み検索機能
+- ブックマーク機能
 
-* Composerインストール
+## 開発環境
+PHP 8.2  
+Laravel 10.46  
+MySQL 8.0.35  
+AWS S3
 
-    ```console
-    composer install
-    ```
+## 設計書
+[設計書ページへ](https://drive.google.com/drive/folders/18_lmz9KgO0vxV2xDXosxfKm8WqzCXoXA?usp=sharing)
 
-* フロント環境構築
+## システム閲覧
+[アプリケーションページへ](https://dish-stock-laravel-c490ece2a987.herokuapp.com/login)
 
-    ```console
-    npm ci
-    npm run build
-    ```
-
-* マイグレーション
-
-    ```console
-    php artisan migrate
-    ```
-
-* 起動
-
-    ```console
-    php artisan serve
-    ```
+### テストアカウント情報
+```
+メールアドレス：test@mail
+パスワード：test@mail
+```
